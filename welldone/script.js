@@ -4,25 +4,21 @@
 
   if (!form || !input) return;
 
+  const initHandshake = async () => {
+    try {
+      const res = await fetch("/handshake", {
+        method: "GET",
+        credentials: "include" 
+      });
 
- const initHandshake = async () => {
-  try {
-    const res = await fetch(`/handshake`, {
-      method: "GET",
-      credentials: "include" 
-    });
+      if (!res.ok) throw new Error(`Status: ${res.status}`);
 
-    if (!res.ok) {
-      throw new Error(`Server responded with status: ${res.status}`);
+      const data = await res.json();
+      console.log("Handshake GET:", data);
+    } catch (err) {
+      console.error("Handshake GET error:", err.message);
     }
-
-
-    const data = await res.json();
-    console.log("Handshake GET:", data);
-  } catch (err) {
-    console.error("Handshake GET error:", err.message);
-  }
-};
+  };
 
   initHandshake();
 
@@ -32,7 +28,7 @@
     if (!value) return;
 
     try {
-      const res = await fetch(`/handshake`, {
+      const res = await fetch("/handshake", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
