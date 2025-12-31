@@ -1,5 +1,5 @@
 (() => {
-  const BASE = "selection-production.up.railway.app"; 
+  const BASE = "185.96.80.7:8080"; 
   const form = document.querySelector("#entry-form");
   const input = document.querySelector("#entry-input");
 
