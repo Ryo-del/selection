@@ -68,7 +68,7 @@
                     const params = new URLSearchParams();
                     params.append('password', input.value);
 
-                    const res = await fetch("185.96.80.7:8080/start", {
+                    const res = await fetch("/start", {
                         method: "POST",
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
