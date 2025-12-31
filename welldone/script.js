@@ -1,23 +1,28 @@
 (() => {
-  const BASE = "185.96.80.7:8080"; 
   const form = document.querySelector("#entry-form");
   const input = document.querySelector("#entry-input");
 
   if (!form || !input) return;
 
 
-  const initHandshake = async () => {
-    try {
-      const res = await fetch(`/handshake`, {
-        method: "GET",
-        credentials: "include" 
-      });
-      const data = await res.json();
-      console.log("Handshake GET:", data);
-    } catch (err) {
-      console.error("Handshake GET error:", err);
+ const initHandshake = async () => {
+  try {
+    const res = await fetch(`/handshake`, {
+      method: "GET",
+      credentials: "include" 
+    });
+
+    if (!res.ok) {
+      throw new Error(`Server responded with status: ${res.status}`);
     }
-  };
+
+
+    const data = await res.json();
+    console.log("Handshake GET:", data);
+  } catch (err) {
+    console.error("Handshake GET error:", err.message);
+  }
+};
 
   initHandshake();
 
