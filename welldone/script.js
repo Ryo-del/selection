@@ -8,7 +8,7 @@
 
   const initHandshake = async () => {
     try {
-      const res = await fetch(`${BASE}/handshake`, {
+      const res = await fetch(`/handshake`, {
         method: "GET",
         credentials: "include" 
       });
@@ -27,7 +27,7 @@
     if (!value) return;
 
     try {
-      const res = await fetch(`${BASE}/handshake`, {
+      const res = await fetch(`/handshake`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
