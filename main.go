@@ -143,8 +143,6 @@ func CORS(next http.Handler) http.Handler {
 func PlayGround(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		fmt.Fprintf(w, "hint: localhost:9999")
-		ip := r.RemoteAddr
-		bot.SendTG("Пользователь " + ip + " Нашёл подсказку")
 	} else {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -236,13 +234,6 @@ func GenerateSessionID() (string, error) {
 
 // GET /handshake — выдаём challenge
 func HandshakeHandlerGet(w http.ResponseWriter, r *http.Request) {
-	ip := r.RemoteAddr
-	mu.Lock()
-	defer mu.Unlock()
-	if time.Since(lastUse) >= cooldown {
-		bot.SendTG("Пользователь " + ip + " Прошёл на этап 3")
-		lastUse = time.Now()
-	}
 	nonce, err := GenerateNonce(3) // 3 байта → 6 hex
 	if err != nil {
 		http.Error(w, "error generating nonce", http.StatusInternalServerError)
@@ -264,7 +255,7 @@ func HandshakeHandlerGet(w http.ResponseWriter, r *http.Request) {
 		Value:    sessionID,
 		HttpOnly: true,
 		SameSite: http.SameSiteLaxMode,
-		Secure:   true, // 🔥 ВАЖНО
+		Secure:   false, // 🔥 ВАЖНО
 		Path:     "/",
 	})
 
