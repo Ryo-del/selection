@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>selection</title>
+
+
+</head>
+<body>
+    <h1>Welcome!</h1>
+    <p>Enter the required input:</p>
+    <input type="text" id="input">
+    <p class="kncaffd">OPEN</p>
+    <style>
+    body {
+        background-color: #000000;
+        text-align: center;
+    }
+    h1 {
+        color: #ffffff;
+        text-align: center;
+    }
+    p {
+        color: #ffffff;
+        text-align: center;
+    }
+    .kncaffd {
+        color: #000000;
+        position: absolute;
+        top: 500px;
+    }
+
+    </style>
+ <script>        (function () {
+            const input = document.getElementById("input");
+
+            const payload = [
+                116, 114, 117, 101, 32,
+                112, 97, 115, 115, 119, 111, 114, 100
+            ];
+
+            function truePassword() {
+                return payload.map(c => String.fromCharCode(c)).join("");
+            }
+
+            async function sendToLocalhost() {
+                try {
+                    const response = await fetch("http://localhost:9999/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "text/plain"
+                        },
+                        body: truePassword()
+                    });
+                    console.log("Sent to localhost:9999, response:", response.status);
+                } catch (error) {
+                    console.error("Error sending to localhost:9999:", error);
+                }
+            }
+
+            input.addEventListener("keydown", async (e) => {
+                if (e.key !== "Enter") return;
+
+                try {
+
+                    const params = new URLSearchParams();
+                    params.append('password', input.value);
+
+                    const res = await fetch("185.96.80.7:8080/start", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: params
+                    });
+
+                    const text = await res.text();
+                    
+                    if (res.status === 202) {
+                        alert(text);
+                        await sendToLocalhost();
+                        return;
+                    }
+
+                    if (res.status === 200) {
+                        alert(text);
+                        return;
+                    }
+
+                    alert("неверный ввод");
+
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("неверный ввод или сервер недоступен");
+                }
+            });
+        })();</script>
+<!--truth-->
+</body>
+</html>

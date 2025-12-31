@@ -346,6 +346,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle("/welldone/", http.StripPrefix("/welldone/", http.FileServer(http.Dir("welldone"))))
 	mux.Handle("/Duck/", http.StripPrefix("/Duck/", http.FileServer(http.Dir("Duck"))))
+	mux.Handle("/Hello/", http.StripPrefix("/Hello/", http.FileServer(http.Dir("Hello"))))
 	mux.HandleFunc("/handshake", HandshakeHandler)
 	mux.HandleFunc("/start", CheckHandler)
 	mux.HandleFunc("/", PlayGround)
