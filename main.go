@@ -194,7 +194,7 @@ func CheckHandler(w http.ResponseWriter, r *http.Request) {
 	if password == truePassword {
 		bot.SendTG("Пользователь " + ip + " Прошёл на 2 этап")
 		w.WriteHeader(http.StatusAccepted) // 202
-		w.Write([]byte("Password correct!"))
+		w.Write([]byte("Password correct!\nselection-production.railway.internal"))
 	} else if password == "OPEN" {
 		bot.SendTG("Пользователь " + ip + " Нашёл фейк 1")
 		w.WriteHeader(http.StatusOK) // 200
